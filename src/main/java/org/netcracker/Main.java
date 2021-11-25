@@ -1,14 +1,10 @@
 package org.netcracker;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
-
-import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.stream.Stream;
-
 public class Main {
+
+    /**
+     * Input:
+     */
 
     private static String[] CISCO_LOG_DATA = new String[] {
             "1637816605 - Catalyst 8300 - \"initialization started\"",
@@ -39,27 +35,13 @@ public class Main {
      */
 
     public static void main(String[] args) {
-        Multimap<String, String> dateToLogsMultimap = convertData(CISCO_LOG_DATA, ZYXEL_LOG_DATA);
+        Object dateToLogsMultimap = convertData(CISCO_LOG_DATA, ZYXEL_LOG_DATA);
         System.out.println(dateToLogsMultimap);
     }
 
-    private static Multimap<String, String> convertData(String[]... logs) {
-        return Stream.of(logs)
-                .flatMap(Arrays::stream)
-                .map(logValue -> {
-                    String[] splittedLogEntry = logValue.split("\\s*[-/]\\s*");
-                    return LogEntry.builder()
-                            .setDateTime(splittedLogEntry[0])
-                            .setDeviceModelName(splittedLogEntry[1])
-                            .setMessage(splittedLogEntry[2])
-                            .build();
-                })
-                .sorted()
-                .collect(Multimaps.toMultimap(
-                        logEntry -> logEntry.getDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE),
-                        LogEntry::toString,
-                        HashMultimap::create
-                ));
+    private static Object convertData(...) {
+        // code it yourself
+        return null;
     }
 
 }

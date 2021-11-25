@@ -1,12 +1,9 @@
 package org.netcracker;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
-public class LogEntry implements Comparable<LogEntry> {
+public class LogEntry {
 
     private LocalDateTime dateTime;
     private String deviceModelName;
@@ -38,14 +35,6 @@ public class LogEntry implements Comparable<LogEntry> {
             return this;
         }
 
-        // code it yourself
-        public Builder setDateTime(String dateTimeStr) {
-            LogEntry.this.dateTime = Instant.ofEpochSecond(Long.parseLong(dateTimeStr))
-                    .atZone(ZoneId.systemDefault())
-                    .toLocalDateTime();
-            return this;
-        }
-
         public Builder setDeviceModelName(String deviceModelName) {
             LogEntry.this.deviceModelName = deviceModelName;
             return this;
@@ -60,36 +49,6 @@ public class LogEntry implements Comparable<LogEntry> {
             return LogEntry.this;
         }
 
-    }
-
-    @Override
-    public int compareTo(LogEntry o) {
-        if (getDateTime().isBefore(o.getDateTime())) {
-            return -1;
-        } else if (getDateTime().isAfter(o.getDateTime())) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) {
-            return true;
-        }
-        if (other == null || getClass() != other.getClass()) {
-            return false;
-        }
-        LogEntry logEntry = (LogEntry) other;
-        return getDateTime().equals(logEntry.getDateTime())
-                && getDeviceModelName().equals(logEntry.getDeviceModelName())
-                && Objects.equals(getMessage(), logEntry.getMessage());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getDateTime(), getDeviceModelName(), getMessage());
     }
 
     @Override
